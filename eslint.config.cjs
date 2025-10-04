@@ -1,4 +1,3 @@
-// eslint.config.js
 const { defineConfig } = require('eslint/config');
 const globals = require('globals');
 const js = require('@eslint/js');
@@ -21,7 +20,7 @@ module.exports = defineConfig([
       globals: {
         ...globals.browser,
         ...globals.es2021,
-        mocha: true, // si usas describe/it
+        mocha: true,
       },
     },
 
@@ -31,7 +30,6 @@ module.exports = defineConfig([
       'plugin:prettier/recommended'
     ),
 
-    // 👇 Aún podemos cargar el plugin "html" sin usar extends
     plugins: {
       html: require('eslint-plugin-html'),
     },

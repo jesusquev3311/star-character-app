@@ -3,13 +3,13 @@ import { swHeaderStyle } from './sw-header.style';
 
 export class SwHeader extends LitElement {
   static properties = {
-    active: { type: String }, // ruta activa, opcional
+    active: { type: String },
   };
 
   static styles = swHeaderStyle;
 
   navigate(path) {
-    window.location.href = path; // navegación SPA (Router intercepta)
+    window.location.href = path;
   }
 
   render() {
@@ -19,7 +19,7 @@ export class SwHeader extends LitElement {
 
         <nav>
           <a href="/characters" class=${this.active === '/characters' ? 'active' : ''}>
-            Personajes
+            Characters
           </a>
         </nav>
       </header>
