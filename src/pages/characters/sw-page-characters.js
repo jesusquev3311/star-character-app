@@ -63,7 +63,7 @@ export class SwPageCharacters extends LitElement {
       this.people = data.results;
       this.next = data.next;
       this.previous = data.previous;
-      this.currentPage = page; // página actual de la búsqueda
+      this.currentPage = page;
     } catch (err) {
       this.error = err.message;
     } finally {
@@ -77,7 +77,7 @@ export class SwPageCharacters extends LitElement {
 
     if (!this.searchQuery) this.lastBrowsePage = this.currentPage;
     this.searchQuery = query;
-    this.searchPeople(this.searchQuery, 1); // búsqueda arranca en página 1
+    this.searchPeople(this.searchQuery, 1);
   }
 
   handleClearEvent() {
@@ -112,25 +112,26 @@ export class SwPageCharacters extends LitElement {
     }
   }
 
+  renderlistItem() {
+    return this.people.map(
+      p => html`
+        <li @click=${() => this.navigateToDetail(p.url)}>
+          <strong>${p.name}</strong><br />
+          <small>${p.birth_year}</small>
+        </li>
+      `
+    );
+  }
   renderPeople() {
     return html`
       <ul>
-        ${this.people.map(
-          p => html`
-            <li @click=${() => this.navigateToDetail(p.url)}>
-              <strong>${p.name}</strong><br />
-              <small>${p.gender} - ${p.birth_year}</small>
-            </li>
-          `
-        )}
+        ${this.renderlistItem()}
       </ul>
       <div class="pagination">
         <button ?disabled=${!this.previous || this.loading} @click=${this.handlePrevious}>
-          ← Anterior
+          ← Prev
         </button>
-        <button ?disabled=${!this.next || this.loading} @click=${this.handleNext}>
-          Siguiente →
-        </button>
+        <button ?disabled=${!this.next || this.loading} @click=${this.handleNext}>Next →</button>
       </div>
     `;
   }
@@ -139,11 +140,10 @@ export class SwPageCharacters extends LitElement {
     const showEmpty = !this.loading && !this.error && this.people.length === 0;
 
     return html`
-      <h2>Personajes de Star Wars</h2>
+      <h2>Star Wars Characters</h2>
 
       <sw-search
         .loading=${this.loading}
-        placeholder="Buscar personaje..."
         @search=${this.handleSearchEvent}
         @clear=${this.handleClearEvent}
       ></sw-search>
@@ -151,7 +151,7 @@ export class SwPageCharacters extends LitElement {
       ${this.error
         ? html`<p class="error">${this.error}</p>`
         : showEmpty
-          ? html`<p class="empty-state">No se encontraron personajes.</p>`
+          ? html`<p class="empty-state">No characters found.</p>`
           : this.renderPeople()}
     `;
   }
