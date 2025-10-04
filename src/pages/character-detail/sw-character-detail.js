@@ -43,12 +43,12 @@ export class SwCharacterDetail extends LitElement {
 
   render() {
     if (this.loading) {
-      return html`<p>Cargando personaje...</p>`;
+      return html`<p>Loading character...</p>`;
     }
 
     if (this.error) {
       return html`<p class="error">${this.error}</p>
-        <a href="/characters">← Volver</a>`;
+        <a href="/characters">← Go back</a>`;
     }
 
     return html`<sw-card .character=${this.character}></sw-card>`;
