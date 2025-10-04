@@ -12,14 +12,13 @@ export class SwSearch extends LitElement {
 
   constructor() {
     super();
-    this.placeholder = 'Buscar personaje...';
+    this.placeholder = 'Search character...';
     this.value = '';
     this.loading = false;
   }
 
   handleInput(e) {
     this.value = e.target.value;
-    // Si el input queda vacío, avisamos al padre para que resetee el listado
     if (this.value.trim() === '') {
       this.dispatchEvent(new CustomEvent('clear', { bubbles: true, composed: true }));
     }
@@ -37,7 +36,7 @@ export class SwSearch extends LitElement {
   }
 
   handleKeyDown(e) {
-    if (e.key === 'Enter') this.handleSearch();
+    if (e.key === 'Enter' && this.value.trim().length > 1) this.handleSearch();
     if (e.key === 'Escape') this.handleClear();
   }
 
@@ -70,7 +69,7 @@ export class SwSearch extends LitElement {
           ? html`<div class="spinner"></div>`
           : html`
               <button class="search-btn" @click=${this.handleSearch} ?disabled=${!hasText}>
-                Buscar
+                Search
               </button>
             `}
       </div>
